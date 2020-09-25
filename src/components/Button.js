@@ -5,7 +5,7 @@ import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 export function SomeButton({title,style,onPress}){
   return (
     <TouchableOpacity style={[styles.container,style]} onPress={onPress}>
-        <Text style={[styles.text,style]}>{title}</Text>
+        <Text style={[styles.text]}>{title}</Text>
 
     </TouchableOpacity>
   )
@@ -23,10 +23,10 @@ const styles=StyleSheet.create({
         borderColor:'black',
         borderWidth:1,
     },
-  text:{
-    fontSize:20,
-    color:'black',
+    text:{
+        fontSize:20,
+        color:'black',
    
-  },
+    },
 
 })

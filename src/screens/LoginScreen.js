@@ -38,7 +38,7 @@ const styles=StyleSheet.create({
     marginBottom: 20,
   },
   loginbutton:{
-    marginVertical:5,
+    marginVertical:30,
   }
 
 })
