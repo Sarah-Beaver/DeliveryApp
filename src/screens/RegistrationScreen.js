@@ -4,7 +4,7 @@ import {Heading} from '../components/Heading'
 import {Input} from '../components/Input'
 import {SomeButton} from '../components/Button'
 
-export function LoginScreen(){
+export function RegistrationScreen(){
   return <View style={styles.container}>
     <Heading style={styles.title}> Login</Heading>
     <Input 
@@ -18,9 +18,10 @@ export function LoginScreen(){
             placeholderTextColor="black" 
             placeholder={'Password'}
             secureTextEntry/>
-    <SomeButton title={'Login'} style={styles.loginbutton} onPress={()=>{}}/>
+             
     <SomeButton title={'Register'} style={styles.registerbutton} onPress={()=>{}}/>
-  
+    <SomeButton title={'Login'} style={styles.loginbutton} onPress={()=>{}}/>
+   
     </View>
 }
 
@@ -40,10 +41,10 @@ const styles=StyleSheet.create({
     marginBottom: 20,
   },
   loginbutton:{
-    marginVertical:30,
+    marginVertical:10,
   },
   registerbutton:{
-    marginVertical:10,
+    marginVertical:30
   }
 
 })
