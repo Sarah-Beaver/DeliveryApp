@@ -1,0 +1,12 @@
+9/28/20
+Stuff needed to install to use naigation stuff. we havent used the tabs or drawers yet, but im sure we will
+as we edit the app further
+
+Also I was using expo cli instead of the react native cli, just due to being told it was easier via my
+tutorial, but it should be easy enough to change if needed
+
+npm install --save react-navigation@latest
+npm install --save react-navigation-stack
+npm install --save react-navigation-tabs
+npm install --save react-navigation-drawer
+npm install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
