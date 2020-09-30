@@ -1,30 +1,24 @@
 import React from 'react';
 import {View,Text, Button, StyleSheet} from 'react-native';
+import {AppHeading} from '../components/AppHeading'
 
 const CourierHomeScreen = props => {
     return(
-        <View style={styles.screen}>
-            <Button title='Profile' onPress={ () => {
-                props.navigation.navigate({routeName: 'Profile'});
-            }}/>
-            <Text>The Home Screen!</Text>
-            <Button title=" Select Job" onPress={ () => {
-                props.navigation.navigate({routeName: 'JobSelect'});
-            }}/>
-            <Button title='Go to Customer View' onPress={ ()=> {
-                props.navigation.navigate({routeName: 'CustomerHome'});
-            }}/>
-            <Button title= 'Sign out' onPress= { () => {
-                props.navigation.popToTop()
-            }}/>
+        <View>
+            <AppHeading props={props} style={styles.heading}></AppHeading>
+           
+            <View style={styles.screen}>
+             
 
+             </View>
         </View>
+        
     );
 };
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
+       
         justifyContent: 'center',
         alignItems: 'center'
     }

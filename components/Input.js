@@ -10,9 +10,11 @@ export function Input({children,style,...props}){
 const styles=StyleSheet.create({
   input:{
     backgroundColor:'lightgray',
+    borderColor:'slategray',
     width:'100%',
     borderRadius:10,
-    padding:20
+    padding:13,
+    borderWidth:1,
   },
 
 })

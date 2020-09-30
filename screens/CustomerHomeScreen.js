@@ -1,23 +1,17 @@
 import React from 'react';
 import {View,Text, StyleSheet, Button} from 'react-native';
+import {AppHeading} from '../components/AppHeading'
+
+
 
 const CustomerHomeScreen = props => {
     return(
-        <View style={styles.screen}>
-
-            <Button title='Profile' onPress={ () => {
-                props.navigation.navigate({routeName: 'Profile'});
-            }}/>
-            <Text>The Home Screen!</Text>
-            <Button title=" Select Store" onPress={ () => {
-                props.navigation.navigate({routeName: 'StoreSelect'});
-            }}/>
-            <Button title='Go to Courier View' onPress={ ()=> {
-                props.navigation.navigate({routeName: 'CourierHome'});
-            }}/>
-            <Button title= 'Sign out' onPress= { () => {
-                props.navigation.popToTop()
-            }}/>
+        <View >
+            {/* <TabIndex/> */}
+           <AppHeading props={props} style={styles.heading}></AppHeading>
+            <View style={styles.screen}>
+               <Text>Some dummy text</Text>
+            </View>
 
         </View>
     );
@@ -25,9 +19,16 @@ const CustomerHomeScreen = props => {
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        marginTop:15,
+        padding:10,
+    },
+    heading:{
+        // justifyContent: 'flex-start',
+        // alignItems: 'flex-start',
+        // alignContent:'center',
+        // padding:10,
     }
 });
 
