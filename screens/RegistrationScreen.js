@@ -9,6 +9,7 @@ import * as firebase from 'firebase'
 
 
 // const RegistrationScreen = props =>
+
 class RegistrationScreen extends React.Component
 {
   constructor(props){
@@ -32,7 +33,7 @@ class RegistrationScreen extends React.Component
             return
           }
           firebase.auth().createUserWithEmailAndPassword(email,password)
-          props.navigation.replace('CustomerHome')
+          this.props.navigation.replace('CustomerHome')
           
       }
       catch(error){
@@ -68,10 +69,11 @@ class RegistrationScreen extends React.Component
                   
               />
             </Item>
-            <SomeButton title={'Confirm Register'} style={styles.registerbutton} onPress={()=>this.signUpUser(this.state.email,this.state.password)}
+            <SomeButton title={'Confirm Register'} style={styles.registerbutton} 
+                onPress={()=>this.signUpUser(this.state.email,this.state.password)}
             />
             <HyperlinkButton title={'Login'} style={styles.loginbutton} onPress={()=>{
-                props.navigation.replace('Login')
+                this.props.navigation.replace('Login')
             }}/>
           </Form>
         </Container>
