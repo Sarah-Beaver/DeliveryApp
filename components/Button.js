@@ -17,7 +17,7 @@ const styles=StyleSheet.create({
         backgroundColor:'lightblue',
         borderRadius:10,
         padding:5,
-        width:'100%',
+        // width:'100%',
         alignItems:'center',
         justifyContent:'center',
         borderColor:'black',

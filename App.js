@@ -14,6 +14,8 @@ const firebaseconfig={
 };
 firebase.initializeApp(firebaseconfig);
 
+
+
 export default function App() {
   return (
     <DeliveryNavigation/>

@@ -24,13 +24,13 @@ export function AppHeading({children,style,props,currentpage}){
 const styles=StyleSheet.create({
   screen:{
     alignItems:'flex-start',
-    // backgroundColor:'lightblue',
+    backgroundColor:'lightblue',
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-around',
     
-    // borderColor:'black',
-    // borderTopWidth:1,
+    borderColor:'black',
+    borderWidth:1,
     // borderBottomWidth:1,
     height:50,
     
@@ -41,9 +41,9 @@ const styles=StyleSheet.create({
     width:'34%',
     padding:10,
     height:'100%',
-    borderBottomWidth:2,
+    borderBottomWidth:1,
     borderLeftWidth:2,
-    // borderTopWidth:2,
+    borderTopWidth:1,
     // borderRadius:0,
     // borderRightWidth:2,
     // borderLeftWidth:2,

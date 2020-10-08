@@ -37,9 +37,11 @@ const styles = StyleSheet.create({
     },
     registerbutton:{
         marginVertical:10,
+        width:'90%',
     },
     loginbutton:{
         marginVertical:10,
+        width:'90%',
     }
 });
 
