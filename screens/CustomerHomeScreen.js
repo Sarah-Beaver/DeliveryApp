@@ -7,8 +7,8 @@ import {AppHeading} from '../components/AppHeading'
 const CustomerHomeScreen = props => {
     return(
         <View >
-            {/* <TabIndex/> */}
-           <AppHeading props={props} style={styles.heading}></AppHeading>
+           
+           <AppHeading props={props} style={styles.heading} currentpage="CustomerHome"></AppHeading>
             <View style={styles.screen}>
                <Text>Some dummy text</Text>
             </View>

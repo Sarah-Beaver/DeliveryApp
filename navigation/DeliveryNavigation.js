@@ -12,7 +12,6 @@ import RegistrationScreen from '../screens/RegistrationScreen';
 import StoreSelectScreen from '../screens/StoreSelectScreen';
 import GroceryScreen from '../screens/GroceryScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
-import insideAppIndex from '../screens/insideAppIndex';
 // instead of doing key:val, we can make val an object if needed
 
 const DeliveryNavigator = createStackNavigator({
@@ -26,8 +25,7 @@ const DeliveryNavigator = createStackNavigator({
     Login: LoginScreen,
     Profile: ProfileScreen,
     Register: RegistrationScreen,
-    StoreSelect: StoreSelectScreen,
-    insideApp: insideAppIndex,
+    StoreSelect: StoreSelectScreen
 });
 
 export default createAppContainer(DeliveryNavigator);
