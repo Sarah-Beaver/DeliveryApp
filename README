@@ -10,3 +10,26 @@ npm install --save react-navigation-stack
 npm install --save react-navigation-tabs
 npm install --save react-navigation-drawer
 npm install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+
+10/13/20
+-Currently commented out firestore stuff on this branch until I get other stuff done
+-added "enablescreens()" to help with optimization as app scales
+- Added profile icon to all relevant components.
+- made the home screen a tab navigation, tabbing between courier and customer view
+    - added icons to these tabs
+- in each tab added 2 pane buttons that lead to navigation of view list/jobs and create/take lists/jobs
+    -added background image
+        TODO: may need to make it remote instead of local
+        TODO: fix styling according to group
+    -styled so it takes up most of screen
+- Completely reorganized navigation based on nesting various navigations together. Basically
+is a stack that leads to a tab, each tab then leads to a different stack. Both of these stacks
+contain a shared profile stack. Kind of showed it here:
+    Login -> HomeTab -> CustomerDetails -> Profile
+    Login -> HomeTab -> CourierDetails -> Profile
+
+    TODO: Profile might not need its own navigator, but that depends on what we want to do exactly with it.
+- Got profile button to appear in header once user passes login screen
+    TODO: We are calling it twice, maybe find a way so we only have to call it once.
+-Moved to react-navigation 5.0 from react-navigation 4.0 because nested navigation was much more cumbersome.
