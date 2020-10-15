@@ -1,8 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import DeliveryNavigation from './navigation/DeliveryNavigation';
-import * as firebase from 'firebase'
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import {enableScreens} from 'react-native-screens';
+
+import LoginStackNavigator from './navigation/LoginStackNavigator';
+import * as firebase from 'firebase';
+
+
+enableScreens(); //optimizes screen naviation
 
 const firebaseconfig={
   apiKey: "AIzaSyCF2EpqWCAWCo0dvcsYwUfOn7APsspjsvk",
@@ -14,11 +20,12 @@ const firebaseconfig={
 };
 firebase.initializeApp(firebaseconfig);
 
-
-
 export default function App() {
+  console.log("hi")
   return (
-    <DeliveryNavigation/>
+    <NavigationContainer>
+      <LoginStackNavigator/>
+    </NavigationContainer>
   );
 }
 
