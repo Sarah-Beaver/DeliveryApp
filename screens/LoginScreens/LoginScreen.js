@@ -1,31 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Container,Form,Item} from 'native-base';
 import {Heading} from '../../components/Heading'
 import {Input} from '../../components/Input'
 import {SomeButton} from '../../components/Button'
 import {HyperlinkButton} from '../../components/HyperlinkButton'
+import * as firebase from 'firebase';
 
 const LoginScreen = props =>  {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-	// LoginUser=(email,password,props)=>{
-	// 	//  onPress={()=>{
-	// 	//   props.navigation.replace('CustomerHome') 
-	// 	// }}
-		
-	// 				try{
-	// 						firebase.auth().signInWithEmailAndPassword(email,password).then(function (user){
-	// 							console.log(user)
-	// 						})
-		
-	// 						// alert(firebase.auth().signInWithEmailAndPassword(email,password))
-	// 						this.props.navigation.replace('CustomerHome')
-							
-	// 				}
-	// 				catch(error){
-	// 						console.log(error.toString())
-	// 				}
-	// 		}
+	const emailInputHandler = (enteredEmail)=> {
+		setEmail(enteredEmail);
+		console.log("Current Email: ", email);
+		console.log("Current Password: ", password)
+	}
+
+	const passwordInputHandler = (enteredPassword) => {
+		setPassword(enteredPassword)
+		console.log("Current Email: ", email);
+		console.log("Current Password: ", password)
+	}
+	
+	
+	LoginUser=(email,password,props)=>{
+		try{
+				firebase.auth().signInWithEmailAndPassword(email,password).then(function (user){
+					console.log(user);
+					props.navigation.replace('Home'); //as far as I can tell it needs to go in here for it to work
+				})
+				let welcomestring= "Welcome " + email + "!";
+				alert(welcomestring);
+		}
+		catch(error){
+				console.log(error.toString())
+		}
+	}
 		
 
   return (
@@ -39,6 +50,7 @@ const LoginScreen = props =>  {
 						placeholderTextColor="black" 
 						placeholder={'Type your email'} 
 						keyboardType={'email-address'}
+						onChangeText={emailInputHandler}
 					/>
 				</Item>
 				<Item stackedLabel>
@@ -47,13 +59,14 @@ const LoginScreen = props =>  {
 						style={styles.input} 
 						placeholderTextColor="black" 
 						placeholder={'Type your password'}
-						secureTextEntry			
+						secureTextEntry
+						onChangeText={passwordInputHandler}			
 					/>
         </Item>
 				<SomeButton
 					title={'Confirm Login'} 
 					style={styles.loginbutton} 
-          onPress={()=>props.navigation.replace("Home")}
+          onPress={()=>LoginUser(email,password,props)}
         />
 				<HyperlinkButton 
 					title={'Register'} 
@@ -105,3 +118,5 @@ const styles=StyleSheet.create({
 })
 
 export default LoginScreen;
+
+//onPress={()=>props.navigation.replace("Home")}

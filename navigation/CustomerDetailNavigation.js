@@ -6,9 +6,7 @@ import CustomerCreateListScreen from '../screens/CustomerDetailScreens/CustomerC
 import CustomerViewListsScreen from '../screens/CustomerDetailScreens/CustomerViewListsScreen';
 import SelectStoreScreen from '../screens/CustomerDetailScreens/SelectStoreScreen';
 import CustomerHomeScreen from '../screens/HomeScreens/CustomerHomeScreen';
-import ProfileScreen from '../screens/ProfileScreens/ProfileScreen';
 
-import { AntDesign } from '@expo/vector-icons';
 
 const CustomerStack = createStackNavigator();
 
@@ -16,22 +14,6 @@ const CustomerDetailNavigation = props =>  {
 	return (
 		<CustomerStack.Navigator 
 			initialRouteName="Home"
-			screenOptions={
-				{
-					headerRight: () => 
-						(
-							<TouchableOpacity 
-								onPress={() => 
-									{
-										props.navigation.navigate("Profile");
-									}
-								}
-							>
-								<AntDesign name="user" size={24} color="black" />
-							</TouchableOpacity>
-						)
-				}
-			}
 		>
 			<CustomerStack.Screen
 				name="CreateList"
@@ -48,15 +30,6 @@ const CustomerDetailNavigation = props =>  {
 				options={
 					{
 						title: "Your Lists"
-					}
-				}
-			/>
-			<CustomerStack.Screen
-				name="Profile"
-				component={ProfileScreen}
-				options={
-					{
-						title: "Your Profile"
 					}
 				}
 			/>

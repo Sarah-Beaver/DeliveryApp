@@ -1,31 +1,41 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Container,Form,Item} from 'native-base';
 import {Heading} from '../../components/Heading'
 import {Input} from '../../components/Input'
 import {SomeButton} from '../../components/Button'
 import {HyperlinkButton} from '../../components/HyperlinkButton'
+import * as firebase from 'firebase';
 
 const RegistrationScreen = props =>  {
-	// signUpUser=(email,password,props)=>{
-	// 	//  onPress={()=>{
-	// 	//   props.navigation.replace('CustomerHome') 
-	// 	// }}
-		
-	// 				try{
-	// 						if(this.state.password.length<6)
-	// 						{
-	// 							alert("Please enter at least 6 characters for the password")
-	// 							return
-	// 						}
-	// 						firebase.auth().createUserWithEmailAndPassword(email,password)
-	// 						this.props.navigation.replace('CustomerHome')
-							
-	// 				}
-	// 				catch(error){
-	// 						console.log(error.toString())
-	// 				}
-	// 		}
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const emailInputHandler = (enteredEmail)=> {
+		setEmail(enteredEmail);
+		console.log("Current Email: ", email);
+		console.log("Current Password: ", password)
+	}
+
+	const passwordInputHandler = (enteredPassword) => {
+		setPassword(enteredPassword)
+		console.log("Current Email: ", email);
+		console.log("Current Password: ", password)
+	}
+	
+	signUpUser=(email,password,props)=>{
+		try{
+			if(password.length<6){
+				alert("Please enter at least 6 characters for the password")
+				return
+			}
+			firebase.auth().createUserWithEmailAndPassword(email,password)
+			props.navigation.replace('Home')
+		}
+		catch(error){
+			console.log(error.toString())
+		}
+	}
 		
 
   return (
@@ -39,6 +49,7 @@ const RegistrationScreen = props =>  {
 						placeholderTextColor="black" 
 						placeholder={'Type your email'} 
 						keyboardType={'email-address'}
+						onChangeText={emailInputHandler}
 				/>
 			</Item>
 			<Item stackedLabel>
@@ -48,16 +59,13 @@ const RegistrationScreen = props =>  {
 						placeholderTextColor="black" 
 						placeholder={'Type your password'}
 						secureTextEntry
+						onChangeText={passwordInputHandler}	
 				/>
 			</Item>
 			<SomeButton 
 				title={'Confirm Register'}
 				style={styles.registerbutton}
-				onPress={() =>
-					{
-						props.navigation.replace("Home")
-					}
-				}
+				onPress={()=>this.signUpUser(email,password,props)}
 			/>
 			<HyperlinkButton 
 				title={'Login'}

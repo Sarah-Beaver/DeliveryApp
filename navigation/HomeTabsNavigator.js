@@ -7,6 +7,8 @@ import CustomerDetailNavigation from '../navigation/CustomerDetailNavigation';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import ProfileScreen from '../screens/ProfileScreens/ProfileScreen';
 
 const HomeTabs = createBottomTabNavigator();
 
@@ -21,6 +23,9 @@ const HomeTabsNavigator = props =>  {
 						tabBarIcon: () => {
 							if (route.name === "CourierHome"){
 								return <MaterialCommunityIcons name="truck-delivery" size={24} color="black" />
+							}
+							else if (route.name === "Profile"){
+								return <FontAwesome name="user" size={24} color="black" />
 							}
 							else{
 								return <Octicons name="checklist" size={24} color="black" />
@@ -46,6 +51,15 @@ const HomeTabsNavigator = props =>  {
 					{
 						tabBarLabel: "Make Lists",
 					}
+				}
+			/>
+			<HomeTabs.Screen
+				name="Profile"
+				component={ProfileScreen}
+				options={
+					{
+						tabBarLabel: "View Profile",
+					}	
 				}
 			/>
 		</HomeTabs.Navigator>

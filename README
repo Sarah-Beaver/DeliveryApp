@@ -33,3 +33,7 @@ contain a shared profile stack. Kind of showed it here:
 - Got profile button to appear in header once user passes login screen
     TODO: We are calling it twice, maybe find a way so we only have to call it once.
 -Moved to react-navigation 5.0 from react-navigation 4.0 because nested navigation was much more cumbersome.
+
+10/15/20
+-commented in back firebase authentication and the firestore initialization
+- replaced class based components with functional components using react hooks, seemingly works the exact same
