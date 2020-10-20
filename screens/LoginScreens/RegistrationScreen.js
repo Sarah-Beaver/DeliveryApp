@@ -26,7 +26,7 @@ const RegistrationScreen = props =>  {
 	
 	signUpUser=(email,password,props)=>{
 		try{
-			if(password.length<6){
+			if(password.length<8){
 				alert("Please enter at least 6 characters for the password")
 				return
 			}
