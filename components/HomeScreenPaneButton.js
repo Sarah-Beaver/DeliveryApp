@@ -23,13 +23,14 @@ const HomeScreenPaneButton = props => {
 const styles= StyleSheet.create({
 	tileShape: {
 		flexDirection: 'row',
-		height:'50%',
-		width:'100%',
+		height:'45%',
+		width:'90%',
 		backgroundColor: 'black',
-		borderBottomWidth: .5,
-		borderTopWidth: 3,
-		borderBottomColor:'black',
-		borderTopColor:'black',
+		borderWidth: 3,
+		borderColor:'black',
+		padding: 10,
+		marginTop: 10,
+		marginHorizontal:10,
 	},
 	tileContent:{
 		width:"100%",

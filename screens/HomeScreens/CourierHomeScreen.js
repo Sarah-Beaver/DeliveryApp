@@ -7,7 +7,7 @@ const CourierHomeScreen= props => {
 	//console.log(props)
 	return (
 		<View style={styles.container}>
-				<HomeScreenPaneButton 
+				<HomeScreenPaneButton style={styles.imagebutton}
 					label= {"View Current Jobs"}
 					image= {require('../../images/CourierViewCurrentJobs.jpg')}
 					onSelect={() => 
@@ -17,7 +17,7 @@ const CourierHomeScreen= props => {
 						}
 					}
 				/>
-			<HomeScreenPaneButton
+			<HomeScreenPaneButton style={styles.imagebutton}
 				label= {"Select new Job"}
 				image= {require('../../images/CourierSelectNewJob.jpg')}
 				onSelect={() => 
@@ -33,14 +33,19 @@ const CourierHomeScreen= props => {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingVertical: 20,
+		// paddingVertical: 20,
 		flex: 1,
-		backgroundColor: 'grey',
+		backgroundColor: 'white',
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
 		height: "100%",
 	},
+	imagebutton:{
+		padding: 50,
+		margin: 50,
+
+	}
 });
 
 export default CourierHomeScreen;

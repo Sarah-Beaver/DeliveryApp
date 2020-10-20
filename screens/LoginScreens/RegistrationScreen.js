@@ -6,6 +6,7 @@ import {Input} from '../../components/Input'
 import {SomeButton} from '../../components/Button'
 import {HyperlinkButton} from '../../components/HyperlinkButton'
 import * as firebase from 'firebase';
+// import firestore from '@react-native-firebase/firestore';
 
 const RegistrationScreen = props =>  {
 	const [email, setEmail] = useState('');

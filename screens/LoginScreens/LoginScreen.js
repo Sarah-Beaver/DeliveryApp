@@ -28,10 +28,13 @@ const LoginScreen = props =>  {
 		try{
 				firebase.auth().signInWithEmailAndPassword(email,password).then(function (user){
 					console.log(user);
+					let welcomestring= "Welcome " + email + "!";
+					alert(welcomestring);
 					props.navigation.replace('Home'); //as far as I can tell it needs to go in here for it to work
+				}).catch(error => {
+					alert('Invalid email and password combination');
 				})
-				let welcomestring= "Welcome " + email + "!";
-				alert(welcomestring);
+				
 		}
 		catch(error){
 				console.log(error.toString())
