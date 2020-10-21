@@ -6,6 +6,7 @@ import {Input} from '../../components/Input'
 import {SomeButton} from '../../components/Button'
 import {HyperlinkButton} from '../../components/HyperlinkButton'
 import * as firebase from 'firebase';
+// import { useScreens } from 'react-native-screens';
 // import firestore from '@react-native-firebase/firestore';
 
 const RegistrationScreen = props =>  {
@@ -26,12 +27,23 @@ const RegistrationScreen = props =>  {
 	
 	signUpUser=(email,password,props)=>{
 		try{
+
 			if(password.length<8){
-				alert("Please enter at least 6 characters for the password")
+				alert("Please enter at least 8 characters for the password")
 				return
 			}
-			firebase.auth().createUserWithEmailAndPassword(email,password)
-			props.navigation.replace('Home')
+			firebase.auth().createUserWithEmailAndPassword(email,password).then(function (user){
+					// console.log(user.user.uid)
+					const userprof = {
+						uid: user.user.uid,
+						email: email
+					}
+					firebase.firestore().collection('users').doc(user.user.uid).set(userprof)
+					props.navigation.replace('Home')
+				}).catch(error=>{
+				alert("Error with email and password combination. Email could be inavalid or already in use.")
+			});
+			
 		}
 		catch(error){
 			console.log(error.toString())
@@ -66,7 +78,9 @@ const RegistrationScreen = props =>  {
 			<SomeButton 
 				title={'Confirm Register'}
 				style={styles.registerbutton}
-				onPress={()=>this.signUpUser(email,password,props)}
+				onPress={()=>
+					signUpUser(email,password,props)
+				}
 			/>
 			<HyperlinkButton 
 				title={'Login'}
