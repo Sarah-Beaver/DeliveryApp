@@ -18,7 +18,10 @@ const firebaseconfig={
   storageBucket: "delivery-boyz-bbe21.appspot.com",
 
 };
-firebase.initializeApp(firebaseconfig);
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseconfig) // prevents error on fast-reload
+}
 
 export default function App() {
   console.log("hi")

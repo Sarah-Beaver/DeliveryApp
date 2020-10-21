@@ -4,11 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import CourierDetailNavigation from '../navigation/CourierDetailNavigation';
 import CustomerDetailNavigation from '../navigation/CustomerDetailNavigation';
+import ProfileNavigation from '../navigation/ProfileNavigation';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import ProfileScreen from '../screens/ProfileScreens/ProfileScreen';
+
 
 const HomeTabs = createBottomTabNavigator();
 
@@ -17,6 +18,7 @@ const HomeTabs = createBottomTabNavigator();
 const HomeTabsNavigator = props =>  {
 	return (
 		<HomeTabs.Navigator
+			initialRouteName="Profile"
 			screenOptions={ ({route}) =>
 				(
 					{
@@ -55,7 +57,7 @@ const HomeTabsNavigator = props =>  {
 			/>
 			<HomeTabs.Screen
 				name="Profile"
-				component={ProfileScreen}
+				component={ProfileNavigation}
 				options={
 					{
 						tabBarLabel: "View Profile",

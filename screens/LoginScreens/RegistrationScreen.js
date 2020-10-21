@@ -15,14 +15,14 @@ const RegistrationScreen = props =>  {
 
 	const emailInputHandler = (enteredEmail)=> {
 		setEmail(enteredEmail);
-		console.log("Current Email: ", email);
-		console.log("Current Password: ", password)
+		//console.log("Current Email: ", email);
+		//console.log("Current Password: ", password)
 	}
 
 	const passwordInputHandler = (enteredPassword) => {
 		setPassword(enteredPassword)
-		console.log("Current Email: ", email);
-		console.log("Current Password: ", password)
+		//console.log("Current Email: ", email);
+		//console.log("Current Password: ", password)
 	}
 	
 	signUpUser=(email,password,props)=>{
@@ -36,9 +36,10 @@ const RegistrationScreen = props =>  {
 					// console.log(user.user.uid)
 					const userprof = {
 						uid: user.user.uid,
-						email: email
+						email: email,
+						displayName: email
 					}
-					firebase.firestore().collection('users').doc(user.user.uid).set(userprof)
+					firebase.firestore().collection('Users').doc(user.user.uid).set(userprof)
 					props.navigation.replace('Home')
 				}).catch(error=>{
 				alert("Error with email and password combination. Email could be inavalid or already in use.")
