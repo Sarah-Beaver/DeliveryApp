@@ -6,7 +6,7 @@ import StoreGridTile from '../../components/StoreGridTile';
 
 const SelectStore = props =>  {
 	const renderGridItem = itemData => {
-		console.log(itemData)
+		//console.log(itemData)
 		return(
 			<StoreGridTile
 				title= {itemData.item.id}

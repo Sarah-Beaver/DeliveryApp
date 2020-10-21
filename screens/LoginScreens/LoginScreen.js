@@ -13,21 +13,21 @@ const LoginScreen = props =>  {
 
 	const emailInputHandler = (enteredEmail)=> {
 		setEmail(enteredEmail);
-		console.log("Current Email: ", email);
-		console.log("Current Password: ", password)
+		//console.log("Current Email: ", email);
+		//console.log("Current Password: ", password)
 	}
 
 	const passwordInputHandler = (enteredPassword) => {
 		setPassword(enteredPassword)
-		console.log("Current Email: ", email);
-		console.log("Current Password: ", password)
+		//console.log("Current Email: ", email);
+		//console.log("Current Password: ", password)
 	}
 	
 	
 	LoginUser=(email,password,props)=>{
 		try{
 				firebase.auth().signInWithEmailAndPassword(email,password).then(function (user){
-					console.log(user);
+					//console.log(user);
 					let welcomestring= "Welcome " + email + "!";
 					alert(welcomestring);
 					props.navigation.replace('Home'); //as far as I can tell it needs to go in here for it to work

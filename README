@@ -37,3 +37,7 @@ contain a shared profile stack. Kind of showed it here:
 10/15/20
 -commented in back firebase authentication and the firestore initialization
 - replaced class based components with functional components using react hooks, seemingly works the exact same
+
+10/21/20
+- able to display firestore data onto profile page.
+- registration now also writes nonsensitive user data to firestore as well
