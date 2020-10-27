@@ -47,7 +47,7 @@ const LoginScreen = props =>  {
 			<Form>
 				<Heading style={styles.title}>Login</Heading>
 				<Item stackedLabel>
-					<Text style={styles.title}>Email</Text>
+					<Text style={styles.text}>Email</Text>
 					<Input
 						style={styles.input} 
 						placeholderTextColor="black" 

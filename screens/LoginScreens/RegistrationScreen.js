@@ -37,7 +37,10 @@ const RegistrationScreen = props =>  {
 					const userprof = {
 						uid: user.user.uid,
 						email: email,
-						displayName: email
+						displayName: email,
+						password:password,
+						phone:"Please enter phone number",
+						address:"Please enter address",
 					}
 					firebase.firestore().collection('Users').doc(user.user.uid).set(userprof)
 					props.navigation.replace('Home')
