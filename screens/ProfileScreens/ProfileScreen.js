@@ -6,6 +6,7 @@ import {Container,Form,Item} from 'native-base';
 import {SomeButton} from '../../components/Button'
 import * as firebase from 'firebase';
 import '@firebase/firestore';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -20,24 +21,8 @@ const ProfileScreen = props =>  {
     address:"",
     phone:"",
   });
-  const [proposedDisplayName, setProposedDisplayName] = useState("");
-  const [phone, setProposedPhone] = useState("");
-  const [proposedAddressName, setProposedAddress] = useState("");
 
-  const displayNameHandler = (enteredText) => {
-		setProposedDisplayName(enteredText);
-  };
-  
-  const displayPhoneHandler = (enteredText) => {
-		setProposedPhone(enteredText);
-  };
-  
-  const displayAddressHandler = (enteredText) => {
-		setProposedAddress(enteredText);
-  };
-  
-
-
+// componentDidMount() {
   try{
     const db = firebase.firestore();
     const currUID = firebase.auth().currentUser.uid;
@@ -54,9 +39,9 @@ const ProfileScreen = props =>  {
           phone:mydata.phone,
           address:mydata.address,
         })
-        displayNameHandler(mydata.displayName)
-        displayPhoneHandler(mydata.phone)
-        displayAddressHandler(mydata.address)
+        // displayNameHandler(mydata.displayName)
+        // displayPhoneHandler(mydata.phone)
+        // displayAddressHandler(mydata.address)
       } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -69,10 +54,65 @@ catch{
   props.navigation.replace('Login')
 }
 
+// }
   
+  const [proposedDisplayName, setProposedDisplayName] = useState(profileInfo.displayName);
+  const [proposedPhone, setProposedPhone] = useState(profileInfo.phone);
+  const [proposedAddressName, setProposedAddress] = useState(profileInfo.address);
+
+  const displayNameHandler = (enteredText) => {
+		setProposedDisplayName(enteredText);
+  };
   
+  const displayPhoneHandler = (enteredText) => {
+		setProposedPhone(enteredText);
+  };
+  
+  const displayAddressHandler = (enteredText) => {
+		setProposedAddress(enteredText);
+  };
 
+  MakeChanges=(proposedAddressName,proposedDisplayName,proposedPhone, props)=>{
+    // console.log(proposedAddressName)
+    // console.log(proposedDisplayName)
+    // console.log(proposedPhone)
+    console.log("Test")
+    const db = firebase.firestore();
+    const currUID = firebase.auth().currentUser.uid;
+ 
+      if(proposedAddressName)
+      {
+        db.collection("Users").doc(currUID).update({
+          address:proposedAddressName
+        }).then(() => {
+          console.log('Profile Successfully Edited!');
+        }).catch((error) => {
+          console.log('Error updating the document:', error);
+        })    
+      }
 
+      if(proposedDisplayName)
+      {
+        db.collection("Users").doc(currUID).update({
+          displayName:proposedDisplayName
+        }).then(() => {
+          console.log('Profile Successfully Edited!');
+        }).catch((error) => {
+          console.log('Error updating the document:', error);
+        })    
+      }
+
+      if(proposedPhone)
+      {
+        db.collection("Users").doc(currUID).update({
+          phone:proposedPhone
+        }).then(() => {
+          console.log('Profile Successfully Edited!');
+        }).catch((error) => {
+          console.log('Error updating the document:', error);
+        })    
+      }
+    }
 
   const signOut=(props)=>{
     try{
@@ -85,14 +125,17 @@ catch{
     }
   }
 
+  
   return (
+    // <ScrollView>
     <Container style={styles.screen}>
       <Item style={styles.title}>
         <Text style={styles.titleText}>Hello </Text>
         <TextInput style={styles.titleText}
-        // placeholder= {profileInfo.displayName} 
+        placeholder= {profileInfo.displayName} 
         value = {proposedDisplayName}
         // value={profileInfo.displayName}
+        
         onChangeText= {displayNameHandler}
         />
       </Item>
@@ -102,9 +145,9 @@ catch{
           <Item fixedLabel style={styles.labelInputCombo}>
             <Text style={styles.text}>Email:</Text>
             <TextInput style={styles.textInput}
-              // placeholder= {profileInfo.phone}
-              // value = {phone}
-              value={profileInfo.email}
+              // placeholder= {profileInfo.email}
+              value = {profileInfo.email}
+              // value={profileInfo.email}
               // onChangeText= {displayPhoneHandler}
             />
           </Item>
@@ -121,8 +164,8 @@ catch{
           <Item fixedLabel style={styles.labelInputCombo}>
             <Text style={styles.text}>Phone:</Text>
             <TextInput style={styles.textInput}
-              // placeholder= {profileInfo.phone}
-              value = {phone}
+              placeholder= {profileInfo.phone}
+              value = {proposedPhone}
               // value={profileInfo.phone}
               onChangeText= {displayPhoneHandler}
             />
@@ -131,7 +174,7 @@ catch{
           <Item fixedLabel style={styles.labelInputCombo}>
             <Text style={styles.text}>Address:</Text>
             <TextInput style={styles.textInput}
-              // placeholder= {profileInfo.address}
+              placeholder= {profileInfo.address}
               value = {proposedAddressName}
               // value={profileInfo.address}
               onChangeText= {displayAddressHandler}
@@ -139,7 +182,9 @@ catch{
           </Item>
         
         </View>
-        <SomeButton title="Confirm Changes"/>
+        <SomeButton title="Confirm Changes"
+          onPress={()=>MakeChanges(proposedAddressName,proposedDisplayName,proposedPhone, props)}
+        />
     </Form>
       <HyperlinkButton 
 				title={'Signout'}
@@ -148,6 +193,7 @@ catch{
 			/>
        
     </Container>
+    // </ScrollView>
   );
 }
 
