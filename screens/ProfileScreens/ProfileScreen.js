@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, Button, LogBox, } from 'react-native';
 import {HyperlinkButton} from '../../components/HyperlinkButton'
 import {Input} from '../../components/Input';
@@ -23,36 +23,39 @@ const ProfileScreen = props =>  {
   });
 
 // componentDidMount() {
-  try{
-    const db = firebase.firestore();
-    const currUID = firebase.auth().currentUser.uid;
-    
-    db.collection("Users").doc(currUID).get().then( (doc) => {
-      // console.log(doc);
-      if (doc.exists) {
-        const mydata= doc.data();
-        setProfileInfo({
-          uid: mydata.uid,
-          email: mydata.email,
-          displayName: mydata.displayName,
-          password:mydata.password,
-          phone:mydata.phone,
-          address:mydata.address,
-        })
-        // displayNameHandler(mydata.displayName)
-        // displayPhoneHandler(mydata.phone)
-        // displayAddressHandler(mydata.address)
-      } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-      }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-  }
-catch{
-  props.navigation.replace('Login')
-}
+  useEffect(() => { 
+    console.log("this should only run once")
+    try{
+      const db = firebase.firestore();
+      const currUID = firebase.auth().currentUser.uid;
+      
+      db.collection("Users").doc(currUID).get().then( (doc) => {
+        // console.log(doc);
+        if (doc.exists) {
+          const mydata= doc.data();
+          setProfileInfo({
+            uid: mydata.uid,
+            email: mydata.email,
+            displayName: mydata.displayName,
+            password:mydata.password,
+            phone:mydata.phone,
+            address:mydata.address,
+          })
+          // displayNameHandler(mydata.displayName)
+          // displayPhoneHandler(mydata.phone)
+          // displayAddressHandler(mydata.address)
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+        });
+    }
+    catch{
+      props.navigation.replace('Login')
+    }
+  },[])
 
 // }
   
@@ -96,7 +99,7 @@ catch{
         db.collection("Users").doc(currUID).update({
           displayName:proposedDisplayName
         }).then(() => {
-          console.log('Profile Successfully Edited!');
+          console.log('Profile Display Name Successfully Edited!');
         }).catch((error) => {
           console.log('Error updating the document:', error);
         })    
@@ -107,7 +110,7 @@ catch{
         db.collection("Users").doc(currUID).update({
           phone:proposedPhone
         }).then(() => {
-          console.log('Profile Successfully Edited!');
+          console.log('Profile Phone Number Successfully Edited!');
         }).catch((error) => {
           console.log('Error updating the document:', error);
         })    

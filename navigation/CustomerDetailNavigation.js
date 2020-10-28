@@ -6,6 +6,7 @@ import CustomerCreateListScreen from '../screens/CustomerDetailScreens/CustomerC
 import CustomerViewListsScreen from '../screens/CustomerDetailScreens/CustomerViewListsScreen';
 import SelectStoreScreen from '../screens/CustomerDetailScreens/SelectStoreScreen';
 import CustomerHomeScreen from '../screens/HomeScreens/CustomerHomeScreen';
+import EnterListDestinationScreen from '../screens/CustomerDetailScreens/EnterListDestinationScreen';
 
 
 const CustomerStack = createStackNavigator();
@@ -21,6 +22,15 @@ const CustomerDetailNavigation = props =>  {
 				options={
 					{
 						title: "Make a new List"
+					}
+				}
+			/>
+			<CustomerStack.Screen
+				name= "ListDestination"
+				component={EnterListDestinationScreen}
+				options={
+					{
+						title: "Enter Delivery Address and Time"
 					}
 				}
 			/>

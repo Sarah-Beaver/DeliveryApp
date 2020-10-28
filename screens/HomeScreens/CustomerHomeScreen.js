@@ -23,7 +23,7 @@ const CustomerHomeScreen = props=> {
 				onSelect={() => 
 					{
 						console.log("Selected the create list pane");
-						props.navigation.push("SelectStore")
+						props.navigation.push("ListDestination")
 					}
 				}
 			/>
