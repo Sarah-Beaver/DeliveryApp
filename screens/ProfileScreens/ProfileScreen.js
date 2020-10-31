@@ -13,37 +13,30 @@ import { ScrollView } from 'react-native-gesture-handler';
 LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 
 const ProfileScreen = props =>  {
-  const [profileInfo, setProfileInfo] = useState({
-    uid:"",
-    displayName: "",
-    email: "",
-    password:"",
-    address:"",
-    phone:"",
-  });
+
+
+const [proposedDisplayName, setProposedDisplayName] = useState('');
+const [proposedPhone, setProposedPhone] = useState('');
+const [proposedAddressName, setProposedAddress] = useState('');
+const [proposedEmailName, setProposedEmail] = useState('');
 
 // componentDidMount() {
   useEffect(() => { 
     console.log("this should only run once")
     try{
       const db = firebase.firestore();
-      const currUID = firebase.auth().currentUser.uid;
+
+      const currUID=firebase.auth().currentUser.uid;
       
       db.collection("Users").doc(currUID).get().then( (doc) => {
         // console.log(doc);
         if (doc.exists) {
           const mydata= doc.data();
-          setProfileInfo({
-            uid: mydata.uid,
-            email: mydata.email,
-            displayName: mydata.displayName,
-            password:mydata.password,
-            phone:mydata.phone,
-            address:mydata.address,
-          })
-          // displayNameHandler(mydata.displayName)
-          // displayPhoneHandler(mydata.phone)
-          // displayAddressHandler(mydata.address)
+    
+          displayNameHandler(mydata.displayName)
+          displayPhoneHandler(mydata.phone)
+          displayAddressHandler(mydata.address)
+          displayEmailHandler(mydata.email)
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -57,16 +50,14 @@ const ProfileScreen = props =>  {
     }
   },[])
 
-// }
-  
-  const [proposedDisplayName, setProposedDisplayName] = useState(profileInfo.displayName);
-  const [proposedPhone, setProposedPhone] = useState(profileInfo.phone);
-  const [proposedAddressName, setProposedAddress] = useState(profileInfo.address);
-
   const displayNameHandler = (enteredText) => {
 		setProposedDisplayName(enteredText);
   };
-  
+
+  const displayEmailHandler = (enteredText) => {
+		setProposedEmail(enteredText);
+  };
+
   const displayPhoneHandler = (enteredText) => {
 		setProposedPhone(enteredText);
   };
@@ -75,46 +66,34 @@ const ProfileScreen = props =>  {
 		setProposedAddress(enteredText);
   };
 
-  MakeChanges=(proposedAddressName,proposedDisplayName,proposedPhone, props)=>{
-    // console.log(proposedAddressName)
-    // console.log(proposedDisplayName)
-    // console.log(proposedPhone)
-    console.log("Test")
-    const db = firebase.firestore();
-    const currUID = firebase.auth().currentUser.uid;
- 
-      if(proposedAddressName)
-      {
+  MakeChanges=(proposedAddressName,proposedDisplayName,proposedPhone, proposedEmailName,props)=>{
+    try{  
+      // let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      // if (reg.test(proposedEmailName) === false) {
+      //   alert("Email is Not Correct");
+      // }
+      // else {
+        const db = firebase.firestore();
+        const currUID = firebase.auth().currentUser.uid;
+        // firebase.auth.currentUser.updateEmail(proposedEmailName).then(() => {
+        //   console.log("Email updated!");
+        // }).catch((error) => { console.log(error); });
         db.collection("Users").doc(currUID).update({
-          address:proposedAddressName
+          address:proposedAddressName,
+          displayName:proposedDisplayName,
+          phone:proposedPhone,
+          // email:proposedEmailName
         }).then(() => {
-          console.log('Profile Successfully Edited!');
+          alert('Profile Successfully Edited!');
         }).catch((error) => {
           console.log('Error updating the document:', error);
-        })    
-      }
+        }) 
+      // }
+  }
+  catch{
 
-      if(proposedDisplayName)
-      {
-        db.collection("Users").doc(currUID).update({
-          displayName:proposedDisplayName
-        }).then(() => {
-          console.log('Profile Display Name Successfully Edited!');
-        }).catch((error) => {
-          console.log('Error updating the document:', error);
-        })    
-      }
-
-      if(proposedPhone)
-      {
-        db.collection("Users").doc(currUID).update({
-          phone:proposedPhone
-        }).then(() => {
-          console.log('Profile Phone Number Successfully Edited!');
-        }).catch((error) => {
-          console.log('Error updating the document:', error);
-        })    
-      }
+  }  
+     
     }
 
   const signOut=(props)=>{
@@ -131,25 +110,25 @@ const ProfileScreen = props =>  {
   
   return (
     // <ScrollView>
-    <Container style={styles.screen}>
+    <View style={styles.screen}>
       <Item style={styles.title}>
         <Text style={styles.titleText}>Hello </Text>
         <TextInput style={styles.titleText}
-        placeholder= {profileInfo.displayName} 
+        // placeholder= {profileInfo.displayName} 
         value = {proposedDisplayName}
         // value={profileInfo.displayName}
         
         onChangeText= {displayNameHandler}
         />
       </Item>
-    <Form>
+    {/* <Form> */}
         {/* <Text>Email: {profileInfo.email}</Text> */}
         <View style={styles.profileField}>
           <Item fixedLabel style={styles.labelInputCombo}>
-            <Text style={styles.text}>Email:</Text>
+            <Text style={styles.text}>Email: </Text>
             <TextInput style={styles.textInput}
               // placeholder= {profileInfo.email}
-              value = {profileInfo.email}
+              value = {proposedEmailName}
               // value={profileInfo.email}
               // onChangeText= {displayPhoneHandler}
             />
@@ -165,9 +144,9 @@ const ProfileScreen = props =>  {
             />
           </Item> */}
           <Item fixedLabel style={styles.labelInputCombo}>
-            <Text style={styles.text}>Phone:</Text>
+            <Text style={styles.text}>Phone: </Text>
             <TextInput style={styles.textInput}
-              placeholder= {profileInfo.phone}
+              // placeholder= {profileInfo.phone}
               value = {proposedPhone}
               // value={profileInfo.phone}
               onChangeText= {displayPhoneHandler}
@@ -175,27 +154,39 @@ const ProfileScreen = props =>  {
           </Item>
           <View style={styles.spacing}></View>
           <Item fixedLabel style={styles.labelInputCombo}>
-            <Text style={styles.text}>Address:</Text>
+            <Text style={styles.text}>Address: </Text>
             <TextInput style={styles.textInput}
-              placeholder= {profileInfo.address}
+              // placeholder= {profileInfo.address}
               value = {proposedAddressName}
               // value={profileInfo.address}
               onChangeText= {displayAddressHandler}
             />
           </Item>
-        
-        </View>
+          </View>
+       {/* <br/> */}
         <SomeButton title="Confirm Changes"
-          onPress={()=>MakeChanges(proposedAddressName,proposedDisplayName,proposedPhone, props)}
+          onPress={()=>MakeChanges(proposedAddressName,proposedDisplayName,proposedPhone,proposedEmailName,props)}
         />
-    </Form>
-      <HyperlinkButton 
+        
+      <View style={styles.ButtonCombo}>
+        <SomeButton style={styles.secureUpdate}
+          title="Update Email"
+          onPress={()=> props.navigation.replace("UpdateEmail")}/>
+         
+         <SomeButton style={styles.secureUpdate}
+          title="Update Password"
+          onPress={()=> props.navigation.replace("UpdatePassword")}/>
+      </View>
+    {/* </Form> */}
+    <View>
+      <HyperlinkButton style={styles.signout}
 				title={'Signout'}
 				style={styles.loginbutton} 
-				onPress={()=>signOut()}
+				onPress={()=>signOut(props)}
 			/>
+      </View>
        
-    </Container>
+    </View>
     // </ScrollView>
   );
 }
@@ -203,9 +194,10 @@ const ProfileScreen = props =>  {
 const styles = StyleSheet.create({
 	screen: {
     flex:1,
-    // // margin:10,
-    padding:10,
-    paddingTop:20,
+    margin:10,
+    // padding:10,
+    // paddingTop:20,
+    flexDirection:'column',
 	
   },
   profileField: {
@@ -231,8 +223,14 @@ const styles = StyleSheet.create({
     fontSize:30,
     fontWeight:'bold',
   },
-  labelInputCombo:{
-    
+  ButtonCombo:{
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // padding:10,
+    // margin:10,
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   text:{
     fontSize:20,
@@ -242,6 +240,19 @@ const styles = StyleSheet.create({
   },
   textInput:{
     fontSize:20,
+  },
+  secureUpdate:{
+
+    // width:"49%",
+    height:40,
+    marginTop:10,
+    // margin:10,
+    padding:10,
+  },
+  signout:{
+    
+    margin:10,
+    padding:10,
   }
 });
 export default ProfileScreen;
