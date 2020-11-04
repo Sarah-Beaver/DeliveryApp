@@ -41,3 +41,11 @@ contain a shared profile stack. Kind of showed it here:
 10/21/20
 - able to display firestore data onto profile page.
 - registration now also writes nonsensitive user data to firestore as well
+
+11/4/20
+-Might have missed an update somewhere
+-Able to count up item count and price and display those into console.
+- Fixed datetime picker and it now works
+TODO: add a modal that displays cart info
+TODO: once modal is made, allow write to db
+TODO: add pictures to food items

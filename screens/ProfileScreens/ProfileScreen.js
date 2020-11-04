@@ -171,11 +171,11 @@ const [proposedEmailName, setProposedEmail] = useState('');
       <View style={styles.ButtonCombo}>
         <SomeButton style={styles.secureUpdate}
           title="Update Email"
-          onPress={()=> props.navigation.replace("UpdateEmail")}/>
+          onPress={()=> props.navigation.push("UpdateEmail")}/>
          
          <SomeButton style={styles.secureUpdate}
           title="Update Password"
-          onPress={()=> props.navigation.replace("UpdatePassword")}/>
+          onPress={()=> props.navigation.push("UpdatePassword")}/>
       </View>
     {/* </Form> */}
     <View>
