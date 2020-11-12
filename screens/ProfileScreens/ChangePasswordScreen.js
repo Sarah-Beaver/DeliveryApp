@@ -97,6 +97,7 @@ UpdatePassword=(proposedEmailName,proposedOldPassword,proposedNewPassword,props)
                 <TextInput style={styles.textInput}
                 // placeholder= {profileInfo.displayName} 
                 value = {proposedOldPassword}
+                secureTextEntry
                 // value={profileInfo.displayName}
                 
                 onChangeText= {displayOldPasswordHandler}
@@ -108,6 +109,7 @@ UpdatePassword=(proposedEmailName,proposedOldPassword,proposedNewPassword,props)
                 <TextInput style={styles.textInput}
                 // placeholder= {profileInfo.displayName} 
                 value = {proposedNewPassword}
+                secureTextEntry
                 // value={profileInfo.displayName}
                 
                 onChangeText= {displayNewPasswordHandler}

@@ -127,6 +127,7 @@ const [proposedEmailName, setProposedEmail] = useState('');
           <Item fixedLabel style={styles.labelInputCombo}>
             <Text style={styles.text}>Email: </Text>
             <TextInput style={styles.textInput}
+             editable={false}
               // placeholder= {profileInfo.email}
               value = {proposedEmailName}
               // value={profileInfo.email}
@@ -148,6 +149,7 @@ const [proposedEmailName, setProposedEmail] = useState('');
             <TextInput style={styles.textInput}
               // placeholder= {profileInfo.phone}
               value = {proposedPhone}
+             
               // value={profileInfo.phone}
               onChangeText= {displayPhoneHandler}
             />
