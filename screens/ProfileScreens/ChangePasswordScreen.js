@@ -120,10 +120,7 @@ UpdatePassword=(proposedEmailName,proposedOldPassword,proposedNewPassword,props)
             onPress={()=>UpdatePassword(proposedEmailName,proposedOldPassword, proposedNewPassword,props)}
             />
 
-            <HyperlinkButton 
-            title={'Profile'} 
-            onPress={()=> props.navigation.replace("Profile")}
-            />
+            
 
         </View>
     );

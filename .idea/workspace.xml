@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="50082987-0ccf-4209-b9a0-6d90a91fdeea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/CustomerDetailScreens/CustomerViewListsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/CustomerDetailScreens/CustomerViewListsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ProfileScreens/ChangeEmailScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ProfileScreens/ChangeEmailScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ProfileScreens/ChangePasswordScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ProfileScreens/ChangePasswordScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,10 +40,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="110" y="140" width="1172" height="637" key="AVDManager" timestamp="1605200252153">
+    <state x="110" y="140" width="1172" height="637" key="AVDManager" timestamp="1605235078544">
       <screen x="0" y="23" width="1387" height="877" />
     </state>
-    <state x="110" y="140" width="1172" height="637" key="AVDManager/0.23.1387.877@0.23.1387.877" timestamp="1605200252153" />
+    <state x="110" y="140" width="1172" height="637" key="AVDManager/0.23.1387.877@0.23.1387.877" timestamp="1605235078544" />
     <state x="110" y="140" width="1173" height="637" key="AVDManager/0.23.1389.877@0.23.1389.877" timestamp="1604425752759" />
   </component>
 </project>

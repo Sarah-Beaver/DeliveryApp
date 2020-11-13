@@ -110,10 +110,6 @@ const ChangeEmailScreen = props =>  {
           onPress={()=>UpdateEmail(proposedEmailName,proposedPassword, props)}
         />
 
-                <HyperlinkButton 
-                title={'Profile'} 
-                onPress={()=> props.navigation.replace("Profile")}
-                />
             {/* </Form> */}
             </View>
         );  
