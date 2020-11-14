@@ -1,15 +1,22 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, FlatList,Button,TouchableOpacity,Modal,Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList,Button,TouchableOpacity,Modal,Alert, TextInput } from 'react-native';
 import * as firebase from 'firebase';
 import '@firebase/firestore';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { FontAwesome } from '@expo/vector-icons';
 
 import ItemGridTile from '../../components/ItemGridTile';
+import { add } from 'react-native-reanimated';
+
 
 const CustomerCreateList = props =>  {
+	const db= firebase.firestore();
 	//this is DB list of items, I might rename
 	const [listOfItems, setListOfItems] = useState ([]);
+	// identifies user
+	const [email, setEmail] = useState([]);
+	// address
+	const [address,setAddress]= useState("");
 	//For date time
 	const [dateDisplay, setDateDisplay] = useState("");
 	const [viewModal, setViewModal] = useState(false);
@@ -20,11 +27,6 @@ const CustomerCreateList = props =>  {
 	const updateListOfItems = (curritem) => {
 		setListOfItems( listOfItems => [...listOfItems, curritem]);
 	};
-
-	// const updateUserList = (curritem) => {
-	// 	setUserList( userList => [ ...userListm, curritem]);
-	// };
-
 	//For date time
 	const handleConfirm=(date) => {
 		setDateDisplay(date.toUTCString());
@@ -43,7 +45,39 @@ const CustomerCreateList = props =>  {
 		setTotalPrice(totalPrice + currPrice);
 		setItemCount(itemCount + 1); 
 	}
-	
+
+	const handleChangeAddress = enteredText => {
+		setAddress(enteredText);
+	}
+
+	const handleListPublish = () => {
+		const currUID= firebase.auth().currentUser.uid;
+		let shoppingList = [];
+		console.log("Current User:", email);
+		console.log("Selected Date:", dateDisplay);
+		console.log("Total:",totalPrice,"Item Count:", itemCount);
+		console.log("Current List of Items: ");
+		for( let i=0; i<listOfItems.length; i++){
+			if(listOfItems[i].count > 0){
+				console.log("\t", listOfItems[i].name, ":", listOfItems[i].count);
+				shoppingList= [...shoppingList,listOfItems[i]];
+			}
+		}
+		console.log(shoppingList);
+		db.collection("Users").doc(currUID).collection("Lists").add({
+			user: email,
+			address: address,
+			datetime: dateDisplay,
+			total: totalPrice,
+			count: itemCount,
+			list: shoppingList
+		}).catch(function(error) {
+			console.error("Error adding list publish document: ", error);
+		});
+
+		props.navigation.popToTop();
+	}
+
 	useEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => (
@@ -66,8 +100,8 @@ const CustomerCreateList = props =>  {
 
 	useEffect(() => {
 		const storeName= props.route.params.storeName; // just to reduce verbose code
+		const currUID= firebase.auth().currentUser.uid;
 		try {
-			const db = firebase.firestore();
 			db.collection("Stores").doc(storeName).collection("Items").get().then ((querySnapshot) => {
 				querySnapshot.forEach((doc)=> {
 					//console.log("Item id:",doc.id,"Item data: ",doc.data());
@@ -83,7 +117,23 @@ const CustomerCreateList = props =>  {
 			});
 		}
 		catch{
-			console.log("Failed to Connect to db");
+			console.log("Failed to Connect to db when fetching items");
+		}
+		try{
+			db.collection("Users").doc(currUID).get().then((doc)=> {
+				if (doc.exists) {
+					const mydata= doc.data();
+					setEmail(mydata.email)
+					console.log("check if user email is stored", email);
+				}else{
+					console.log("No such document!");
+				}
+			}).catch(function(error) {
+				console.log("Error getting document", error);
+			});
+		}
+		catch{
+			console.log("Error getting Document:", error);
 		}
 	},[]);
 
@@ -112,6 +162,13 @@ const CustomerCreateList = props =>  {
 			<Text>Current Selected Time for Delivery:</Text>
 			<Text>{dateDisplay}</Text>
 			<Button title="Select a Delivery Date and time" onPress={onPressDateViewButton}/>
+			<Text>Entered Deliver Address: </Text>
+			<TextInput
+				value={address}
+				onChangeText={handleChangeAddress}
+				placeholder="Enter Your Address!"
+			/>
+			<Button title="Confirm and Publish List" onPress={handleListPublish}/>
 			<DateTimePickerModal
 				isVisible={viewModal}
 				onConfirm={handleConfirm}

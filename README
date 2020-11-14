@@ -47,5 +47,9 @@ contain a shared profile stack. Kind of showed it here:
 -Able to count up item count and price and display those into console.
 - Fixed datetime picker and it now works
 TODO: add a modal that displays cart info
-TODO: once modal is made, allow write to db
+
+
+11/14/20
+-finished functionality of the create list feature
+TODO: make it look pretty with modals
 TODO: add pictures to food items
