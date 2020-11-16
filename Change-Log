@@ -1,0 +1,59 @@
+9/28/20
+Stuff needed to install to use naigation stuff. we havent used the tabs or drawers yet, but im sure we will
+as we edit the app further
+
+Also I was using expo cli instead of the react native cli, just due to being told it was easier via my
+tutorial, but it should be easy enough to change if needed
+
+npm install --save react-navigation@latest
+npm install --save react-navigation-stack
+npm install --save react-navigation-tabs
+npm install --save react-navigation-drawer
+npm install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+
+10/13/20
+-Currently commented out firestore stuff on this branch until I get other stuff done
+-added "enablescreens()" to help with optimization as app scales
+- Added profile icon to all relevant components.
+- made the home screen a tab navigation, tabbing between courier and customer view
+    - added icons to these tabs
+- in each tab added 2 pane buttons that lead to navigation of view list/jobs and create/take lists/jobs
+    -added background image
+        TODO: may need to make it remote instead of local
+        TODO: fix styling according to group
+    -styled so it takes up most of screen
+- Completely reorganized navigation based on nesting various navigations together. Basically
+is a stack that leads to a tab, each tab then leads to a different stack. Both of these stacks
+contain a shared profile stack. Kind of showed it here:
+    Login -> HomeTab -> CustomerDetails -> Profile
+    Login -> HomeTab -> CourierDetails -> Profile
+
+    TODO: Profile might not need its own navigator, but that depends on what we want to do exactly with it.
+- Got profile button to appear in header once user passes login screen
+    TODO: We are calling it twice, maybe find a way so we only have to call it once.
+-Moved to react-navigation 5.0 from react-navigation 4.0 because nested navigation was much more cumbersome.
+
+10/15/20
+-commented in back firebase authentication and the firestore initialization
+- replaced class based components with functional components using react hooks, seemingly works the exact same
+
+10/21/20
+- able to display firestore data onto profile page.
+- registration now also writes nonsensitive user data to firestore as well
+
+11/4/20
+-Might have missed an update somewhere
+-Able to count up item count and price and display those into console.
+- Fixed datetime picker and it now works
+TODO: add a modal that displays cart info
+
+
+11/14/20
+-finished functionality of the create list feature
+TODO: make it look pretty with modals
+TODO: add pictures to food items
+
+11/16/20
+-renamed this file to change-log
+-Made a new readme
