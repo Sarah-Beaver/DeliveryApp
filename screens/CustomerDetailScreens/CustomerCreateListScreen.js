@@ -9,6 +9,7 @@ import ItemGridTile from '../../components/ItemGridTile';
 
 
 
+
 const CustomerCreateList = props =>  {
 	const db= firebase.firestore();
 	//this is DB list of items, I might rename
@@ -18,6 +19,7 @@ const CustomerCreateList = props =>  {
 	const [email, setEmail] = useState([]);
 	// address
 	const [address,setAddress]= useState("");
+	const [presetAddress, setPreSetAddress] = useState("");
 	//For date time
 	const [dateTime, setDateTime] = useState("");
 	const [dateDisplay, setDateDisplay] = useState("");
@@ -25,14 +27,16 @@ const CustomerCreateList = props =>  {
 	// total price
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [itemCount, setItemCount] = useState(0); 
-
+	//cart modal
+	const [cartModal, setCartModal] = useState(false);
+	
 	const updateListOfItems = (curritem) => {
 		setListOfItems( listOfItems => [...listOfItems, curritem]);
 	};
 	//For date time
 	const handleConfirm=(date) => {
 		setDateTime(date)
-		setDateDisplay(date.toUTCString());
+		setDateDisplay(date.toLocaleString());
 		setViewDateModal(false);
 	}
 
@@ -78,14 +82,35 @@ const CustomerCreateList = props =>  {
 		}).catch(function(error) {
 			console.error("Error adding list publish document: ", error);
 		});
-
+		alert('List has been Published!');
 		props.navigation.popToTop();
+	}
+
+	const handleUpdateCount= (itemData,symbol) => {
+		if (symbol === true){
+			itemData.item.count +=1;
+			setItemCount(itemCount + 1); 
+			setTotalPrice(totalPrice + itemData.item.price);
+		}
+		else{
+			if( itemData.item.count > 0){
+				itemData.item.count -=1;
+				setItemCount(itemCount - 1); 
+				setTotalPrice(totalPrice - itemData.item.price);
+			}
+			else{
+				itemData.item.count=0;
+				setItemCount(itemCount); 
+				setTotalPrice(totalPrice);
+			}
+		}
 	}
 
 	useEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => (
 				<TouchableOpacity onPress={()=>{
+					setCartModal(true);
 					console.log("Total:", totalPrice, " Item Count:",itemCount)
 					console.log("Current List of Items: ");
 					for (let i = 0; i < listOfItems.length; i++) {
@@ -127,7 +152,8 @@ const CustomerCreateList = props =>  {
 			db.collection("Users").doc(currUID).get().then((doc)=> {
 				if (doc.exists) {
 					const mydata= doc.data();
-					setEmail(mydata.email)
+					setEmail(mydata.email);
+					setPreSetAddress(mydata.address);
 					console.log("check if user email is stored", email);
 				}else{
 					console.log("No such document!");
@@ -159,20 +185,93 @@ const CustomerCreateList = props =>  {
 			/>
 		)
 	}
+
+	const renderCartList = itemData => {
+		if(itemData.item.count <= 0){
+			return(
+				<View></View>
+			)
+		}
+		else{
+			return(
+				<View style={{flex:1, flexDirection:"row"}}>
+					<Text style= {{flex:6}}>{itemData.item.count}X {itemData.item.name} - ${itemData.item.price.toFixed(2)}</Text>
+					<TouchableOpacity style={{flex:1, backgroundColor:'lightblue'}} onPress={()=>handleUpdateCount(itemData,true)}>
+						<Text style={styles.textStyle}>+</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={{flex:1, backgroundColor:'red'}} onPress={()=>handleUpdateCount(itemData,false)}>
+						<Text style={styles.textStyle}>-</Text>
+					</TouchableOpacity>
+				</View>
+			)
+		}
+
+	}
 	//console.log(props.route.params.storeName)
   return (
 	<View>
-		<Text>Total Price:${totalPrice.toFixed(2)}</Text>
-		<Text>Current Selected Time for Delivery:</Text>
-		<Text>{dateDisplay}</Text>
-		<Button title="Select a Delivery Date and time" onPress={onPressDateViewButton}/>
-		<Text>Entered Deliver Address: </Text>
-		<TextInput
-			value={address}
-			onChangeText={handleChangeAddress}
-			placeholder="Enter Your Address!"
-		/>
-		<Button title="Confirm and Publish List" onPress={handleListPublish}/>
+		
+		<View style={{height:80,backgroundColor:'lightblue',justifyContent:"space-evenly",borderWidth:1,borderColor:"black"}}>
+			<Text style= {styles.textStyle} >Total Price:${totalPrice.toFixed(2)}</Text>
+		</View>
+		
+		
+		<Modal 
+			visible= {cartModal} 
+			animationType= "fade"
+			onRequestClose={ () => setCartModal(false)}
+		>
+			<View style={{flex:1}}>
+				<View style={{flex:1, backgroundColor:"lightblue",borderWidth:1,borderColor:"black"}}>
+					<Text style= {styles.textStyle} >Total Price:${totalPrice.toFixed(2)}</Text>
+				</View>
+				
+				<View style= {{flex:3, justifyContent:"space-evenly",borderWidth:1,borderColor:"black"}}>
+					<Text style= {styles.textStyle} >Current Selected Time for Delivery:</Text>
+					<Text style= {styles.textStyle} >{dateDisplay}</Text>
+					<TouchableOpacity
+						style={{backgroundColor:'lightblue',borderWidth:1,borderColor:"black",justifyContent:"center"}}
+						onPress={onPressDateViewButton}>
+						<Text style= {styles.textStyle} >Select a Delivery Date and Time</Text>
+					</TouchableOpacity>
+				</View>
+
+				<View style= {{flex:3, justifyContent:"space-evenly",borderWidth:1,borderColor:"black"}}>
+					<Text style={styles.textStyle}> Entered Delivery Address: </Text>
+					<View style={{flexDirection:"row"}}>
+						<TextInput
+							style={{backgroundColor:'lightblue',textAlign:"center",fontSize:20,flex:4,borderWidth:1,borderColor:"black"}}
+							value={address}
+							onChangeText={handleChangeAddress}
+							placeholder="Enter Your Address!"
+						/>
+						<TouchableOpacity 
+							style={{backgroundColor:'lightblue', flex:1,borderWidth:1,borderColor:"black"}} 
+							onPress={()=> setAddress(presetAddress)}
+						>
+							<Text>Use Profile Address</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+
+				<View style= {{flex:4, justifyContent:"space-evenly",borderWidth:1,borderColor:"black"}}>
+					<Text style={styles.textStyle}> Current Items:</Text>
+					<FlatList data={listOfItems} keyExtractor={(item,index) => item.id} renderItem={renderCartList} />
+				</View>
+
+				<View style={styles.modalEndButtonLayout, {flex: 1, justifyContent: "space-evenly", flexDirection:"row"}}>
+					<TouchableOpacity style={{backgroundColor:'lightblue', flex:1,borderWidth:1,borderColor:"black"}} onPress= {handleListPublish}>
+							<Text style= {styles.textStyle}>Publish List</Text>
+					</TouchableOpacity>
+				
+					<TouchableOpacity style={{backgroundColor:'red', flex:1,borderWidth:1,borderColor:"black"}} onPress={()=>setCartModal(false)}>
+						<Text style= {styles.textStyle}>Cancel</Text>
+					</TouchableOpacity>
+
+				</View>
+			</View>
+		</Modal>
+
 		<DateTimePickerModal
 			isVisible={viewDateModal}
 			onConfirm={handleConfirm}
@@ -185,12 +284,30 @@ const CustomerCreateList = props =>  {
 }
 
 const styles = StyleSheet.create({
-	screen: {
-		flex:1,
+	textStyle: {
+		textAlign:"center",
+		fontSize:20
+	},
+	viewTotalPriceStyle: {
+		backgroundColor:'lightblue',
+		justifyContent:"space-evenly",
+	},
+	modalEndButtonLayout: {
+		flexDirection: "row",
 		justifyContent:'center',
-		alignItems: 'center',
+		height:80,
+	},
+	modalEndButtons: {
+		borderRadius:100,
+		justifyContent:"space-evenly",
+		borderColor:'black',
+		borderWidth:10,
 	}
+
 });
 export default CustomerCreateList;
 
 //numColumns={2} this goes in flatlist element and  will output as two columns need to style
+
+{/* <SomeButton title= "Confirm and Publish List" style={styles.modalEndButtons} onPress={handleListPublish}/>
+				<SomeButton title = "Cancel" style={styles.modalEndButtons} onPress={()=>setCartModal(false)}/> */}

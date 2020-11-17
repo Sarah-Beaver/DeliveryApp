@@ -65,7 +65,7 @@ const ChangeEmailScreen = props =>  {
                 email:proposedEmailName
             }).then(()=>{
                 alert("Email has been updated")
-                prop.navigation.replace('Profile')
+                props.navigation.replace('Profile')
             }).catch((error)=> {
                 console.log(error);
             });

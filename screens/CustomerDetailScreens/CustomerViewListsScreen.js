@@ -9,6 +9,9 @@ const CustomerViewLists = props =>  {
   const [lists, setLists]=useState([]);
 
   const updateLists=(currList,currId)=>{
+    // currList.total= currList.total.ToFixed(2);
+    //currList.datetime= currList.DateTime.toUTCString();
+    console.log("current list:",currList);
     setLists(lists=>[...lists,{
       Address:currList.address,
       Store:currList.store,
@@ -54,24 +57,27 @@ const CustomerViewLists = props =>  {
 	// 		/>
 	// 	)
   // }
+
+  const renderListItem = itemData => {
+    // console.log("item:",item);
+    console.log(itemData.item.DateTime);
+    itemData.item.DateTime=itemData.item.DateTime.toDate();
+    return(
+      <View style={styles.Item}>
+        <Text style={styles.textSize}><Text style={styles.titleText}>Store: </Text> {itemData.item.Store}</Text>
+        <Text style={styles.textSize}><Text style={styles.titleText}>Delivery Address: </Text>{itemData.item.Address}</Text>
+        <Text style={styles.textSize}><Text style={styles.titleText}>Total: </Text>${itemData.item.Total.toFixed(2)}</Text>
+        <Text style={styles.textSize}><Text style={styles.titleText}>Delivery Time: </Text>{itemData.item.DateTime.toLocaleString()} </Text>
+      </View>
+    )
+  }
   
   return (
     <View style={styles.screen}>
       <FlatList
       data={lists}
-      renderItem={({ item }) => (
-        // <TouchableOpacity >
+      renderItem={renderListItem}
 
-          <View style={styles.Item}>
-          <Text style={styles.textSize}><Text style={styles.titleText}>Store: </Text> {item.Store}</Text>
-          <Text style={styles.textSize}><Text style={styles.titleText}>Delivery Address: </Text>{item.Address}</Text>
-          <Text style={styles.textSize}><Text style={styles.titleText}>Total: </Text>{item.Total}</Text>
-          <Text style={styles.textSize}><Text style={styles.titleText}>Delivery Time: </Text>{new Date(item.DateTime.toDate()).toLocaleString()} </Text>
-
-          </View>
-        /* </TouchableOpacity> */
-      )}
-      
       />
     </View>
   );
@@ -105,3 +111,5 @@ const styles = StyleSheet.create({
   },
 });
 export default CustomerViewLists;
+
+{/* <Text style={styles.textSize}><Text style={styles.titleText}>Delivery Time: </Text>{new Date(item.DateTime.toDate()).toLocaleString()} </Text> */}
