@@ -9,7 +9,7 @@ const ItemGridTile= props => {
 		>
 			<View style={styles.container}>
 				<Text>{props.title}</Text>
-				<Text>{props.price}</Text>
+				<Text>${props.price}</Text>
 			</View>
 		</TouchableOpacity>
 	); 
