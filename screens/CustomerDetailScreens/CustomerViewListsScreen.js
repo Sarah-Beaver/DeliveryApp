@@ -10,10 +10,10 @@ const CustomerViewLists = props =>  {
 
   const updateLists=(currList,currId)=>{
     setLists(lists=>[...lists,{
-      Address:currList.Address,
-      Store:currList.Store,
+      Address:currList.address,
+      Store:currList.store,
       DateTime:currList.datetime,
-      Total:currList.Total,
+      Total:currList.total,
       id:currId
     }]);
   }

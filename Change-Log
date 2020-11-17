@@ -57,3 +57,5 @@ TODO: add pictures to food items
 11/16/20
 -renamed this file to change-log
 -Made a new readme
+- fixed item selector so now 2 itmes appear on
+each row.
